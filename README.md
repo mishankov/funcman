@@ -1,0 +1,3 @@
+# funcman
+
+Functional programming experiments
