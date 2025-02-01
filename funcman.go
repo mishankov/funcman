@@ -19,4 +19,20 @@ func MapWithError[I, O any](input []I, f func(input I) (O, error)) ([]O, error) 
 	return result, nil
 }
 
+func ReduceWithError[I any, O any](input []I, initialValue O, f func(O, I) (O, error)) (O, error) {
+	if len(input) == 0 {
+		return initialValue, nil
+	}
+
+	result := initialValue
+	for _, val := range input {
+		var err error
+		result, err = f(result, val)
+		if err != nil {
+			return *new(O), err
+		}
+	}
+	return result, nil
+}
+
 // TODO: reduce, for each, filter
