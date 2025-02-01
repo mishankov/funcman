@@ -25,6 +25,12 @@ func TestMapWithError(t *testing.T) {
 		}
 	})
 
+	t.Run("test empty slice", func(t *testing.T) {
+		result, err := funcman.MapWithError([]int{}, func(i int) (int, error) { return i * 2, nil })
+		assert.NoError(t, err)
+		assert.EmptySlice(t, result)
+	})
+
 	t.Run("test error", func(t *testing.T) {
 		got, err := funcman.MapWithError([]int{1, 2, 3}, func(i int) (string, error) { return "", errSample })
 		assert.Error(t, err)
